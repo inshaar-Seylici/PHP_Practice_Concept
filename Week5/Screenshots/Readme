@@ -1,0 +1,171 @@
+PHP File Uploading Screenshots
+
+This folder contains screenshots demonstrating PHP file uploading, file renaming, file validation, and file handling in the course Web Application Development - PHP & MySQL.
+The example uses an HTML form and PHP to select a file, display its details, rename it, check for duplicates, limit its size and extension, and move it to a destination folder.
+1. PHP File Upload Form
+Screenshot Name
+Part 1.png
+Description
+This screenshot shows the HTML form used to select a file and enter a new file name before uploading.
+Main concepts covered:
+- action="Home.php" submits the form to the PHP file named Home.php.
+- method="post" sends form data using the HTTP POST method.
+- enctype="multipart/form-data" is required to send uploaded files.
+- <input type="file" name="stdimages"> lets the user choose a file.
+- <input type="text" name="file_Name"> lets the user choose a new name.
+- The submit button starts the upload request.
+Example Code
+<form action="Home.php" method="post" enctype="multipart/form-data">
+    <h1>Select Your Image</h1>
+    <input type="file" name="stdimages"> <hr>
+    <label>Enter Rename File</label>
+    <input type="text" name="file_Name"> <hr>
+    <input type="submit" name="submit" value="Upload">
+</form>
+Important: The name attributes are used as keys when PHP reads $_FILES and $_POST.
+Screenshot
+
+2. Reading File Information and Renaming the Uploaded File
+Screenshot Name
+Part 2.png
+Description
+This screenshot demonstrates how PHP accesses uploaded file information using the $_FILES superglobal array, extracts a filename extension, and prepares the destination path with a new filename.
+Main concepts covered:
+- !empty($_FILES['stdimages']['name']) checks whether a file name was submitted.
+- $_FILES['stdimages']['name'] contains the original file name.
+- $_FILES['stdimages']['type'] contains the browser-provided file type.
+- $_FILES['stdimages']['size'] contains the file size in bytes.
+- $_FILES['stdimages']['tmp_name'] contains the temporary uploaded file location.
+- explode(".", ...) splits a filename at each dot.
+- end(...) returns the last element, which is used here as the extension.
+- $_POST['file_Name'] reads the new name entered in the form.
+Reading Uploaded File Details
+if (!empty($_FILES['stdimages']['name'])) {
+    echo "File name is :" . $_FILES['stdimages']['name'] . "<hr>";
+    echo "File name type :" . $_FILES['stdimages']['type'] . "<hr>";
+    echo "File name size :" . $_FILES['stdimages']['size'] . "<hr>";
+    echo "File name Temp Name :" . $_FILES['stdimages']['tmp_name'] . "<hr>";
+}
+Extracting the Extension and Building a New Filename
+$ext = explode(".", $_FILES['stdimages']['name']);
+$ext = end($ext);
+
+$temp = $_FILES['stdimages']['tmp_name'];
+
+$Destination = "A:\JUST Docs\Semester 7 Docs\PHP & MySQL\PHP_test/"
+    . $_POST['file_Name'] . "." . $ext;
+For example, uploading Ahmed.jpg and entering Profile produces the intended new filename Profile.jpg.
+Note: end() returns the last part of the split filename (jpg), not the first part (Ahmed). The destination shown above is the local Windows path used in the class example; it must be replaced with a writable folder on your own server.
+Screenshot
+
+3. Checking for Existing Files, File Size, and Allowed Extensions
+Screenshot Name
+Part 3.png
+Description
+This screenshot explains how PHP checks whether a file already exists, rejects large uploads, and allows only selected file extensions.
+Main concepts covered:
+- file_exists($Destination) checks whether the destination file already exists.
+- $_FILES['stdimages']['size'] < 100 * 1024 checks whether the upload is smaller than 100 KiB (102,400 bytes).
+- array("jpg", "pdf") lists the allowed filename extensions.
+- strtolower(...) converts the extension to lowercase.
+- in_array($ext, $exten) checks whether the extension is allowed.
+Example Code
+if (file_exists($Destination)) {
+    echo "Already Exists";
+} else {
+    if ($_FILES['stdimages']['size'] < 100 * 1024) {
+        $exten = array("jpg", "pdf");
+        $exts = explode(".", $_FILES['stdimages']['name']);
+        $ext = strtolower(end($exts));
+
+        if (!in_array($ext, $exten)) {
+            echo "Not Allowed File Type";
+        } else {
+            // Continue to move_uploaded_file(...)
+        }
+    } else {
+        echo "Exceeds the limit";
+    }
+}
+Possible Results
+- Already Exists — the target filename is already taken.
+- Not Allowed File Type — the extension is not jpg or pdf.
+- Exceeds the limit — the file is 100 KiB or larger.
+Important: The example accepts JPG and PDF, even though the form heading says “Select Your Image.” A PDF is a document, not an image.
+Screenshot
+
+4. Moving the Uploaded File and Showing Messages
+Screenshot Name
+Part 4.png
+Description
+This screenshot demonstrates the final upload step using move_uploaded_file() and the messages displayed when the upload succeeds or fails.
+Main concepts covered:
+- move_uploaded_file($temp, $Destination) moves the temporary upload to its final location.
+- The function returns true when the move succeeds and false when it fails.
+- echo displays feedback to the user.
+- The final else displays a message when no filename was submitted.
+Example Code
+if (move_uploaded_file($temp, $Destination)) {
+    echo "File Uploaded Successfully";
+} else {
+    echo "Not Moved File";
+}
+No File Selected
+else {
+    echo "Please select file";
+}
+Possible Results
+- File Uploaded Successfully — PHP moved the uploaded file.
+- Not Moved File — the move operation failed.
+- Please select file — the file selection was empty.
+Screenshot
+
+5. Complete PHP File Uploading Workflow
+Description
+The complete example follows these steps:
+1. Open the HTML upload form.
+2. Choose a file and enter a new filename.
+3. Submit the form to Home.php using POST.
+4. Read the uploaded file details using $_FILES.
+5. Extract the original file extension.
+6. Combine the requested new name and extension to create the destination path.
+7. Check whether the destination file already exists.
+8. Reject files with a size of 100 KiB or more.
+9. Reject extensions other than jpg or pdf.
+10. Move the file using move_uploaded_file().
+11. Display the result to the user.
+PHP Functions and Superglobals Used
+Function / Variable	Purpose
+$_FILES	Reads uploaded file metadata and the temporary filename.
+$_POST	Reads the new filename from the form.
+empty()	Checks whether a value is empty.
+explode()	Splits the filename into parts.
+end()	Returns the last array element.
+strtolower()	Converts the extension to lowercase.
+file_exists()	Checks for an existing destination file.
+in_array()	Tests whether an extension is in the allowed list.
+move_uploaded_file()	Moves a valid PHP-uploaded temporary file.
+echo	Prints messages in the browser.
+
+
+6. How to Run the Example
+Requirements
+- PHP installed and running through a local web server, such as XAMPP or WAMP.
+- The source file saved as Home.php.
+- A valid, writable upload destination directory.
+Example Project Location
+XAMPP: C:\xampp\htdocs\PHP_test\Home.php
+WAMP:  C:\wamp\www\PHP_test\Home.php
+Then visit the appropriate local URL, for example:
+http://localhost/PHP_test/Home.php
+Ensure the destination folder exists and PHP has permission to write to it. The drive and directory from the screenshot may not exist on another machine.
+7. Important Notes for Real Applications
+This is a classroom example, not production-ready upload handling. Before using similar code on a public website:
+- Check $_FILES['stdimages']['error'] and verify the upload succeeded before reading or moving it.
+- Validate actual file content or MIME type server-side, rather than trusting the extension or browser-supplied type field.
+- Sanitize or replace user-entered filenames to prevent path traversal and unsafe filenames; generate unique server-side names where possible.
+- Restrict uploads to a dedicated directory, preferably outside the publicly accessible web root.
+- Use a fixed, normalized destination directory and enforce size limits in PHP configuration as well as application code.
+- Escape any user-controlled text before displaying it in HTML.
+- If checking for duplicates, use a strategy that prevents filename collisions under concurrent requests.
+Learning summary: This lesson introduces file uploads with HTML and PHP, the $_FILES and $_POST superglobals, file renaming, duplicate checks, size and extension checks, and move_uploaded_file().
