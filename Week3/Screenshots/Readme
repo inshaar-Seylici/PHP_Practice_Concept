@@ -1,0 +1,374 @@
+# PHP Array Functions and Functions
+
+This folder contains PHP practices demonstrating multidimensional arrays, array functions, string functions, and user-defined functions.
+
+The practices cover:
+
+* Multidimensional arrays
+* `is_array()`
+* `in_array()`
+* `count()`
+* `explode()`
+* `shuffle()`
+* `array_merge()`
+* `array_reverse()`
+* `array_push()`
+* `array_pop()`
+* `end()`
+* User-defined functions
+* Factorial functions
+
+---
+
+# Practice #1: Multidimensional Array
+
+## Description
+
+This practice demonstrates a **two-dimensional numeric array**, where an array contains other arrays.
+
+### Example
+
+```php
+$numbers = array(
+    array(1, 2, 3),
+    array(4, 5, 6),
+    array(7, 8, 9)
+);
+
+foreach ($numbers as $row) {
+    echo "$row[0] <br>";
+}
+```
+
+### Explanation
+
+The array contains three rows, and each row contains three values.
+
+```text
+1  2  3
+4  5  6
+7  8  9
+```
+
+A nested `foreach` loop can be used to access all elements.
+
+---
+
+# Practice #2: is_array() Function
+
+## Description
+
+The `is_array()` function checks whether a variable is an array.
+
+### Example
+
+```php
+$info = array("Mohamed", "Abdi", 90);
+
+if (is_array($info))
+    echo "Is Array";
+else
+    echo "Is not Array";
+```
+
+### Explanation
+
+Since `$info` is an array, the output is:
+
+```text
+Is Array
+```
+
+---
+
+# Practice #3: in_array() Function
+
+## Description
+
+The `in_array()` function checks whether a specific value exists inside an array.
+
+### Example
+
+```php
+if (in_array(90, $info))
+    echo "Found";
+else
+    echo "Not Found";
+```
+
+Since `90` exists in `$info`, the output is:
+
+```text
+Found
+```
+
+---
+
+# Practice #4: count() Function
+
+## Description
+
+The `count()` function returns the number of elements in an array.
+
+### Example
+
+```php
+$arrays = array(
+    array(90, "Abukar", "Ibrahim"),
+    array(80, "Omar", "Ibrahim")
+);
+
+echo "Size of the array is: " . count($arrays);
+```
+
+Output:
+
+```text
+Size of the array is: 2
+```
+
+The `.` operator is used to concatenate the text with the number returned by `count()`.
+
+---
+
+# Practice #5: explode() Function
+
+## Description
+
+The `explode()` function converts a string into an array using a separator.
+
+### Example
+
+```php
+$fullname = "Abukar Ibrahim Mohamed";
+
+$info = explode(" ", $fullname);
+
+print_r($info);
+```
+
+The spaces separate the string into:
+
+```text
+Abukar
+Ibrahim
+Mohamed
+```
+
+---
+
+# Practice #6: shuffle() Function
+
+## Description
+
+The `shuffle()` function randomly changes the order of elements in an array.
+
+### Example
+
+```php
+shuffle($info);
+
+print_r($info);
+```
+
+The elements remain the same, but their order is changed randomly.
+
+---
+
+# Practice #7: array_merge() Function
+
+## Description
+
+The `array_merge()` function combines two or more arrays into one array.
+
+### Example
+
+```php
+$array1 = array("Abukar", "Ibrahim", "Mohamed");
+$array2 = array("Omar", "Ibrahim", "Mohamed");
+
+$array3 = array_merge($array1, $array2);
+
+print_r($array3);
+```
+
+The two arrays are combined into `$array3`.
+
+---
+
+# Practice #8: array_reverse() Function
+
+## Description
+
+The `array_reverse()` function reverses the order of elements in an array.
+
+### Example
+
+```php
+$array4 = array_reverse($array3);
+
+print_r($array4);
+```
+
+If the original array is:
+
+```text
+Abukar
+Ibrahim
+Mohamed
+```
+
+the reversed array becomes:
+
+```text
+Mohamed
+Ibrahim
+Abukar
+```
+
+---
+
+# Practice #9: array_push() Function
+
+## Description
+
+The `array_push()` function adds one or more elements to the end of an array.
+
+### Example
+
+```php
+array_push($array3, "Abdi", "Mohamed");
+
+print_r($array3);
+```
+
+The values `Abdi` and `Mohamed` are added to the end of `$array3`.
+
+---
+
+# Practice #10: array_pop() Function
+
+## Description
+
+The `array_pop()` function removes the last element from an array.
+
+### Example
+
+```php
+array_pop($array1);
+
+print_r($array1);
+```
+
+The last element of `$array1` is removed.
+
+---
+
+# Practice #11: end() Function
+
+## Description
+
+The `end()` function moves the internal pointer to the last element and returns that element.
+
+### Example
+
+```php
+$array5 = array(1, 2, 3, 4, 5);
+
+$last_element = end($array5);
+
+print_r($last_element);
+```
+
+Output:
+
+```text
+5
+```
+
+---
+
+# Practice #12: Defining a Function
+
+## Description
+
+This practice demonstrates how to create and call a user-defined PHP function.
+
+### Example
+
+```php
+function myFunction($name, $age) {
+    echo "My name is $name and I am $age years old.";
+}
+
+myFunction("Abukar", 25);
+```
+
+### Explanation
+
+The function receives two parameters:
+
+* `$name`
+* `$age`
+
+When the function is called with `"Abukar"` and `25`, it displays the information.
+
+---
+
+# Practice #13: Factorial Function
+
+## Description
+
+This practice demonstrates how to create a function that calculates the factorial of a number using a `for` loop.
+
+### Example
+
+```php
+function factorial($a) {
+    $result = 1;
+
+    for ($i = 1; $i <= $a; $i++) {
+        $result *= $i;
+    }
+
+    echo "The factorial of $a is: $result";
+}
+
+factorial(5);
+```
+
+### Explanation
+
+The factorial of `5` is calculated as:
+
+```text
+5 × 4 × 3 × 2 × 1 = 120
+```
+
+Therefore, the output is:
+
+```text
+The factorial of 5 is: 120
+```
+
+---
+
+# Summary
+
+These practices demonstrate useful PHP array and function concepts:
+
+1. **Multidimensional Array** – stores arrays inside another array.
+2. **is_array()** – checks whether a variable is an array.
+3. **in_array()** – searches for a value in an array.
+4. **count()** – counts array elements.
+5. **explode()** – converts a string into an array.
+6. **shuffle()** – randomly changes array order.
+7. **array_merge()** – combines arrays.
+8. **array_reverse()** – reverses an array.
+9. **array_push()** – adds elements to the end.
+10. **array_pop()** – removes the last element.
+11. **end()** – gets the last array element.
+12. **Functions** – creates reusable blocks of code.
+13. **Factorial Function** – calculates a factorial using a loop.
+
+These functions are useful for managing data and building more organized PHP applications.
